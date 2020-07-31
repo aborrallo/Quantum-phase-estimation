@@ -1,0 +1,481 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     14233,        473]
+NotebookOptionsPosition[     12774,        422]
+NotebookOutlinePosition[     13119,        437]
+CellTagsIndexPosition[     13076,        434]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["Quantum phase estimation algorithm",
+ FontSize->24,
+ FontColor->RGBColor[0, 1, 0]]], "Text",
+ CellChangeTimes->{{3.737264264472345*^9, 3.7372642717992535`*^9}}],
+
+Cell["\<\
+This algorithm obtain the eigenvalue of a quantum operator given his \
+eigenvalue.\
+\>", "Text",
+ CellChangeTimes->{{3.73726444023526*^9, 3.737264510747444*^9}}],
+
+Cell["We are going to work with this quantum operator:", "Text",
+ CellChangeTimes->{{3.73726435227198*^9, 3.7372643743799553`*^9}, {
+  3.737264513603571*^9, 3.7372645400754046`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"U", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       RowBox[{"1", "/", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}], ",", 
+       RowBox[{"1", "/", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       RowBox[{
+        RowBox[{"-", "1"}], "/", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}], ",", 
+       RowBox[{"1", "/", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"MatrixForm", "[", "U", "]"}]}], "Input",
+ CellChangeTimes->{{3.737264380521239*^9, 3.73726442426334*^9}, {
+  3.737264552047224*^9, 3.73726461862344*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  TagBox[
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"1", "0", "0", "0"},
+      {"0", "1", "0", "0"},
+      {"0", "0", 
+       FractionBox["1", 
+        SqrtBox["2"]], 
+       FractionBox["1", 
+        SqrtBox["2"]]},
+      {"0", "0", 
+       RowBox[{"-", 
+        FractionBox["1", 
+         SqrtBox["2"]]}], 
+       FractionBox["1", 
+        SqrtBox["2"]]}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}},
+        "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+   Function[BoxForm`e$, 
+    MatrixForm[BoxForm`e$]]],
+  Background->RGBColor[0.9, 1, 1]]], "Input",
+ CellChangeTimes->{3.737264627042632*^9}],
+
+Cell["\<\
+We are going to obtain the eigenvalues and the eigen vector of the quantum \
+operator:\
+\>", "Text",
+ CellChangeTimes->{{3.737264655112117*^9, 3.737264680028174*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Eigensystem", "[", "U", "]"}]], "Input",
+ CellChangeTimes->{{3.7372646862771387`*^9, 3.7372646919584503`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", 
+     FractionBox[
+      RowBox[{"1", "+", "\[ImaginaryI]"}], 
+      SqrtBox["2"]], ",", 
+     FractionBox[
+      RowBox[{"1", "-", "\[ImaginaryI]"}], 
+      SqrtBox["2"]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", 
+       RowBox[{"-", "\[ImaginaryI]"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "\[ImaginaryI]", ",", "1"}], "}"}]}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.7372646934427657`*^9, 3.7372669473866405`*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Operator1", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "/", 
+      RowBox[{"Sqrt", "[", "2", "]"}]}], ")"}], "*", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", 
+        RowBox[{"Sqrt", "[", "2", "]"}], ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "0", ",", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "I"}], ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "I"}], ",", "0", ",", "0"}], "}"}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Operator2", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "/", 
+      RowBox[{"Sqrt", "[", "2", "]"}]}], ")"}], "*", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", 
+        RowBox[{"Sqrt", "[", "2", "]"}], ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "0", ",", 
+        RowBox[{"Sqrt", "[", "2", "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"I", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "I", ",", "0", ",", "0"}], "}"}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.7372670173112373`*^9, 3.73726711853446*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"EigenIn", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "1", "}"}], ",", 
+     RowBox[{"{", "0", "}"}], ",", 
+     RowBox[{"{", "0", "}"}], ",", 
+     RowBox[{"{", "0", "}"}]}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.737267138236859*^9, 3.7372671645656886`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Eigenvector1", "=", 
+  RowBox[{"Operator1", ".", "EigenIn"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Eigenvector2", "=", 
+  RowBox[{"Operator2", ".", "EigenIn"}]}]}], "Input",
+ CellChangeTimes->{{3.7372671922443023`*^9, 3.7372672592231307`*^9}, {
+  3.7372673428796577`*^9, 3.7372673563499994`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"-", 
+     FractionBox["\[ImaginaryI]", 
+      SqrtBox["2"]]}], "}"}], ",", 
+   RowBox[{"{", 
+    FractionBox["1", 
+     SqrtBox["2"]], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.7372672452020807`*^9, 3.7372672601451015`*^9}, 
+   3.7372673588314543`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    FractionBox["\[ImaginaryI]", 
+     SqrtBox["2"]], "}"}], ",", 
+   RowBox[{"{", 
+    FractionBox["1", 
+     SqrtBox["2"]], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.7372672452020807`*^9, 3.7372672601451015`*^9}, 
+   3.7372673588471174`*^9}]
+}, Open  ]],
+
+Cell["Now we aply the operator to the eigenvectors:", "Text",
+ CellChangeTimes->{{3.7372672941959925`*^9, 3.7372673238482065`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"U", ".", "Eigenvector1"}], "\[IndentingNewLine]", 
+ RowBox[{"U", ".", "Eigenvector2"}]}], "Input",
+ CellChangeTimes->{{3.737267363441498*^9, 3.737267374267456*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "-", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "+", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.737267377236662*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "+", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "-", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.737267377236662*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Eigenvector1", "*", 
+  FractionBox[
+   RowBox[{"1", "+", "\[ImaginaryI]"}], 
+   SqrtBox["2"]]}], "\[IndentingNewLine]", 
+ RowBox[{"Eigenvector2", "*", 
+  FractionBox[
+   RowBox[{"1", "-", "\[ImaginaryI]"}], 
+   SqrtBox["2"]]}]}], "Input",
+ CellChangeTimes->{{3.7372674341872406`*^9, 3.737267469274979*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "-", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "+", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.737267471715333*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "+", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["1", "2"], "-", 
+     FractionBox["\[ImaginaryI]", "2"]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.7372674717309575`*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Eigenvalue1", "=", 
+   FractionBox[
+    RowBox[{"1", "+", "\[ImaginaryI]"}], 
+    SqrtBox["2"]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Eigenvalue2", "=", 
+   FractionBox[
+    RowBox[{"1", "-", "\[ImaginaryI]"}], 
+    SqrtBox["2"]]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7372675204914227`*^9, 3.7372675478142843`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"phase1", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Exp", "[", 
+      RowBox[{"2", "*", "Pi", "*", "I", "*", "\[Theta]"}], "]"}], "==", 
+     "Eigenvalue1"}], ",", "\[Theta]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"phase2", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Exp", "[", 
+      RowBox[{"2", "*", "Pi", "*", "I", "*", "\[Theta]"}], "]"}], "==", 
+     "Eigenvalue2"}], ",", "\[Theta]"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.737267883310811*^9, 3.7372679829609547`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"\[Theta]", "\[Rule]", 
+    RowBox[{"ConditionalExpression", "[", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"\[ImaginaryI]", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"\[ImaginaryI]", " ", "\[Pi]"}], "4"], "+", 
+           RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]", " ", 
+            RowBox[{"C", "[", "1", "]"}]}]}], ")"}]}], 
+        RowBox[{"2", " ", "\[Pi]"}]]}], ",", 
+      RowBox[{
+       RowBox[{"C", "[", "1", "]"}], "\[Element]", "Integers"}]}], "]"}]}], 
+   "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.7372679483805666`*^9, 3.7372679851174445`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"\[Theta]", "\[Rule]", 
+    RowBox[{"ConditionalExpression", "[", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"\[ImaginaryI]", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"\[ImaginaryI]", " ", "\[Pi]"}], "4"]}], "+", 
+           RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]", " ", 
+            RowBox[{"C", "[", "1", "]"}]}]}], ")"}]}], 
+        RowBox[{"2", " ", "\[Pi]"}]]}], ",", 
+      RowBox[{
+       RowBox[{"C", "[", "1", "]"}], "\[Element]", "Integers"}]}], "]"}]}], 
+   "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.7372679483805666`*^9, 3.7372679851174445`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"phase1", "=", 
+  RowBox[{"N", "[", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"\[ImaginaryI]", " ", 
+      RowBox[{"(", 
+       FractionBox[
+        RowBox[{"\[ImaginaryI]", " ", "\[Pi]"}], "4"], ")"}]}], 
+     RowBox[{"2", " ", "\[Pi]"}]]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"phase2", "=", 
+  RowBox[{"N", "[", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"\[ImaginaryI]", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox[
+          RowBox[{"\[ImaginaryI]", " ", "\[Pi]"}], "4"]}], "+", 
+        RowBox[{"2", "*", "I", "*", "Pi"}]}], ")"}]}], 
+     RowBox[{"2", " ", "\[Pi]"}]]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7372679968844423`*^9, 3.737268072583172*^9}, {
+  3.737268130824476*^9, 3.7372681371495914`*^9}}],
+
+Cell[BoxData["0.125`"], "Output",
+ CellChangeTimes->{3.737268075271087*^9, 3.7372681407282305`*^9}],
+
+Cell[BoxData["0.875`"], "Output",
+ CellChangeTimes->{3.737268075271087*^9, 3.7372681407282305`*^9}]
+}, Open  ]]
+},
+WindowSize->{1280, 637},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.4 para Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 184, 3, 41, "Text"],
+Cell[745, 25, 171, 4, 30, "Text"],
+Cell[919, 31, 182, 2, 30, "Text"],
+Cell[1104, 35, 894, 25, 86, "Input"],
+Cell[2001, 62, 967, 31, 120, InheritFromParent],
+Cell[2971, 95, 176, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3172, 103, 134, 2, 48, "Input"],
+Cell[3309, 107, 781, 23, 61, "Output"]
+}, Open  ]],
+Cell[4105, 133, 1407, 41, 108, "Input"],
+Cell[5515, 176, 314, 9, 31, "Input"],
+Cell[CellGroupData[{
+Cell[5854, 189, 320, 6, 52, "Input"],
+Cell[6177, 197, 397, 13, 61, "Output"],
+Cell[6577, 212, 375, 12, 61, "Output"]
+}, Open  ]],
+Cell[6967, 227, 131, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[7123, 232, 189, 3, 52, "Input"],
+Cell[7315, 237, 401, 13, 55, "Output"],
+Cell[7719, 252, 401, 13, 55, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8157, 270, 331, 9, 117, "Input"],
+Cell[8491, 281, 401, 13, 55, "Output"],
+Cell[8895, 296, 403, 13, 55, "Output"]
+}, Open  ]],
+Cell[9313, 312, 373, 11, 117, "Input"],
+Cell[CellGroupData[{
+Cell[9711, 327, 565, 15, 86, "Input"],
+Cell[10279, 344, 704, 19, 67, "Output"],
+Cell[10986, 365, 733, 20, 67, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11756, 390, 798, 23, 161, "Input"],
+Cell[12557, 415, 99, 1, 31, "Output"],
+Cell[12659, 418, 99, 1, 64, "Output"]
+}, Open  ]]
+}
+]
+*)
+
